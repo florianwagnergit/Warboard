@@ -15,7 +15,7 @@
     // ******* https://stackoverflow.com/questions/45661027/typescript-outdir-setting-in-tsconfig-json-not-working ******** Zum builden NUR tsc in console!!
 
     "outDir": "./nodeapp/build",                      /* Redirect output structure to the directory. */
-    "rootDir": "./nodeapp",                   /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+    "rootDir": "./",                   /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
     // "incremental": true,                   /* Enable incremental compilation */
     // "tsBuildInfoFile": "./",               /* Specify file to store incremental compilation information */

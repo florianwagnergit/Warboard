@@ -1,4 +1,5 @@
 import express from 'express';
+import { websocketLaunchServer } from './websocket';
 
 const app = express();
 
@@ -7,14 +8,11 @@ app.get('/', (req, res) => {
     res.end();
 });
 
-app.listen(3000, () => {
-    console.log('app listening on localhost:3000');
+app.get('/connect', (req, res) => {
+
 });
 
-/* Webserver listen
-const server = app.listen(config.port, config.host, () => {
-  console.log('Server is listening on: ' + config.host + ':' + config.port);
-  
-  // Websocket server erstellen
-  websocket(config, server);
-}); */
+const server = app.listen(3000, () => {
+    console.log('app listening on localhost:3000');
+    websocketLaunchServer();
+});

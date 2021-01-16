@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Field } from '../../class/Field'
 import { Player } from '../../class/Player'
 import { Observable, Subject } from 'rxjs';
+import { webSocket } from "rxjs/webSocket";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class BoardService {
   players: Player[];
   currentField = new Subject();
   isInRageOfSkill = new Subject<Calculation>();
-
-  constructor() {  }
+  ws;
+  constructor() { }
 
   initBoard(width: number, height: number, players: Player[]): void {
     // Init Board
@@ -45,6 +46,16 @@ export class BoardService {
     // Give Turn to Player 1
     this.players[0].setTurn(true);
     console.log('BOARD INITIALIZED');
+
+    // Init Websocket
+    // https://github.com/ReactiveX/rxjs/issues/4166
+    this.ws = webSocket({
+      url: 'ws://localhost:3001',
+      deserializer: msg => msg
+    });
+    this.ws.subscribe((message) => {
+      console.log(message);
+    }, (err) => console.error(err), () => console.warn('Completed!'));
   }
 
   getMatrix(): Field[][] {
