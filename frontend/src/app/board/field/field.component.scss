@@ -1,0 +1,26 @@
+.field {
+    width: 1.5vw;
+    height: 1.5vw;
+    min-width: 15px;
+    min-height: 15px;
+    max-width: 25px;
+    max-height: 25px;
+    position: relative;
+    background-color: #424242;    
+}
+
+.isInRange {
+    background-color: rgb(0, 95, 0);
+}
+
+.hasTurn {
+    background-color: orange;
+}
+
+.selected {
+    background-color: #202020;
+}
+
+:hover {
+    background-color: #8f8f8f;
+}

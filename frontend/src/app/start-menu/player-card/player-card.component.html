@@ -1,0 +1,44 @@
+ <div class="md-form">
+   <!-- Card -->
+   <mdb-card>
+    <button type="button" class="close" aria-label="Close">
+      <span style="float: right; margin-right: 8px;" (click)="removeThisPlayer()" aria-hidden="true">×</span>
+    </button>
+     <!--Card content-->
+     <mdb-card-body>
+      <div [ngClass]="{'lockedIn': player.getIsReady()}">
+        <div class="row justify-content-center align-items-center space-around">
+          <div>
+            <mdb-icon style="margin: 8px;" fas icon="shield-alt" size="2x" (click)="setClass('Warrior')"></mdb-icon>
+            <mdb-icon style="margin: 8px;" fas icon="hat-wizard" size="2x" (click)="setClass('Mage')"></mdb-icon>
+            <mdb-icon style="margin: 8px;" fas icon="cross" size="2x" (click)="setClass('Priest')"></mdb-icon>
+            <mdb-icon style="margin: 8px;" fas icon="bone" size="2x" (click)="setClass('Hunter')"></mdb-icon>
+            <mdb-icon style="margin: 8px;" fas icon="user-ninja" size="2x" (click)="setClass('Rouge')"></mdb-icon>
+          </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+          <div>
+            <p>Class: {{class}}</p>
+          </div>
+        </div>
+        <hr>
+        <div class="row align-items-center" style="margin-bottom: 20px;">
+          <input mdbInput required [(ngModel)]="playerName" type="text" id="form1" class="w-100" placeholder="Name">
+        </div>
+        <div class="row align-items-center" style="margin-bottom: 20px;">
+          <select required [(ngModel)]="team" class="browser-default custom-select">
+            <option selected value="null">Team</option>
+            <option value="top">Top</option>
+            <option value="bot">Bottom</option>
+          </select>
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <button *ngIf="!player.getIsReady()" (click)="lockIn()" type="button" mdbBtn color="success" mdbWavesEffect>Lock in!</button>
+        <button *ngIf="player.getIsReady()" (click)="unlock()" type="button" mdbBtn color="warning" mdbWavesEffect>Unlock</button>
+        <p class="col text-warning text-wrap" style="font-size: 12px;">{{userInfo}}</p>
+      </div>
+     </mdb-card-body>
+   </mdb-card>
+   <!-- Card -->
+ </div>

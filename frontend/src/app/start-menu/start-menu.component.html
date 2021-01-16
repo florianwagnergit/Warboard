@@ -1,0 +1,37 @@
+<div *ngIf="!gameStarted" class="container-fluid startMenu">
+    <div class="container-fluid justify-content-center">
+        <div class="row align-items-center">
+            <div *ngFor="let player of players" style="margin-right: 10px; max-width: 20rem;">
+                <app-player-card [player]="player" (removePlayer)="removePlayer($event)" (readyPlayer)="readyPlayer($event)" class="col"></app-player-card>
+            </div>
+            <mdb-icon class="indigo-text" mdbWavesEffect (click)="addPlayer()" size="3x" fas icon="plus"></mdb-icon>
+        </div>        
+        <div class="row align-items-center">
+            <div [ngClass]="{'rgba-blue-light': boardSize===30}" (click)="setBoardSize(30)" class="view overlay">
+                <div class="boardField" style="width: 100px; height: 100px;">
+                    <p class="centered">30 x 30</p>
+                </div>
+                <div class="mask flex-center rgba-blue-light">
+                    <p class="white-text">30 x 30</p>
+                </div>
+            </div>
+            <div [ngClass]="{'rgba-blue-light': boardSize===40}" (click)="setBoardSize(40)" class="view overlay">
+                <div class="boardField" style="width: 125px; height: 125px;">
+                    <p class="centered">40 x 40</p>
+                </div>
+                <div class="mask flex-center rgba-blue-light">
+                    <p class="white-text">40 x 40</p>
+                </div>
+            </div>
+            <div [ngClass]="{'rgba-blue-light': boardSize===50}" (click)="setBoardSize(50)" class="view overlay">
+                <div class="boardField" style="width: 150px; height: 150px;">
+                    <p class="centered">50 x 50</p>
+                </div>
+                <div class="mask flex-center rgba-blue-light">
+                    <p class="white-text">50 x 50</p>
+                </div>
+            </div>
+        </div>      
+        <button *ngIf="playerSelectionDone" type="button" mdbBtn color="success" (click)="startGame()" mdbWavesEffect>Start Game!</button> 
+    </div>
+</div>

@@ -1,0 +1,3 @@
+<div [ngClass]="{'selected': field.getSelected(), 'hasTurn': getTurn(), 'isInRange': isInRange}" class="field" (click)="setSelected()" mdbTooltip="{{getPlayerName()}} X: {{field.getPosX()}} Y: {{field.getPosY()}}">
+    <app-hero *ngIf="hasHero()"></app-hero>
+</div>

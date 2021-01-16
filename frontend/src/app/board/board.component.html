@@ -1,0 +1,14 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+      <div *ngFor="let row of matrix">
+        <div *ngFor="let field of row">
+          <app-field [field]="field"></app-field>
+        </div>
+      </div>
+      <app-control-menu></app-control-menu>
+    </div>
+</div>
+
+<div class="container-fluid">
+  <app-skillbar></app-skillbar>
+</div>
