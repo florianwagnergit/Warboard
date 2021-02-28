@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
-import { Player } from '../../class/Player'
 import { BoardService } from '../services/board.service';
+import { Router } from '@angular/router';
+import { invalid } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-start-menu',
@@ -10,60 +10,58 @@ import { BoardService } from '../services/board.service';
 })
 export class StartMenuComponent implements OnInit {
 
-  boardSize: number;
-  players: Player[];
-  playerSelectionDone: boolean;
-  gameStarted: boolean;
+  playerName: string;
+  class: string;
+  joinGameColor = 'light';
+  createGameColor = 'success';
+  userInfo = ''
+  gameId = ''
 
-  @Output() gameStart = new EventEmitter();
 
-  constructor(private boardService: BoardService) { }
+  constructor(private boardService: BoardService, private router: Router) { }
 
   ngOnInit(): void {
-    this.players = [];
-    this.players.push(new Player(uuidv4()));
-    this.players.push(new Player(uuidv4()));
-    this.boardSize = 30;
-    this.playerSelectionDone = false;
-    this.gameStarted = false;
+    this.playerName = null;
+    this.class = null;
   }
 
-  addPlayer() {
-    if(!this.playerSelectionDone) {
-      this.players.push(new Player(uuidv4()));
+  gameIdChange() {
+    if(this.gameId.length == 36) {
+      this.joinGameColor = 'info';
+    } else {
+      this.joinGameColor = 'light';
     }
   }
 
-  setBoardSize(size) {
-    this.boardSize = size;
-  }
-
-  removePlayer(playerId) {
-    if(this.players.length > 2) {
-      this.players = this.players.filter((player) => { return player.getPlayerId() !== playerId; });
+  joinGame() {
+    if(this.gameId.length == 36) {
+      this.boardService.joinGame(this.gameId, this.boardService.getPlayerId()).subscribe((result: any) => {
+        this.boardService.setGameId(this.gameId);
+        console.log(result);
+        this.boardService.setPlayers(result.msg);
+        this.router.navigate(['player-selection']);
+      }, (err) => {
+        console.log(err);
+        this.userInfo = 'Something went wrong, please try again.';
+      });
+    } else {
+      this.userInfo = 'Invalid Game ID.';
     }
+
   }
 
-  readyPlayer(readyPlayer) {
-    let readyCount = 0;
-    this.playerSelectionDone = false;
-    for(let player of this.players) {
-      if(player.getPlayerId() === readyPlayer.getPlayerId()) {
-        player = readyPlayer;
-      }
-      if(player.getIsReady()) {
-        readyCount ++;
-        if(readyCount === this.players.length) {
-          this.playerSelectionDone = true;
-        }
-      }
-    }
-  }
-
-  startGame() {
-    console.log('START GAME ....');
-    this.boardService.initBoard(this.boardSize, this.boardSize, this.players);
-    this.gameStarted = true;
-    this.gameStart.emit(true);
+  createNewGame() {
+    this.boardService.createNewGame().subscribe((result: any) => {
+      this.boardService.setGameId(result.gameId);
+      console.log(result.gameId);
+      this.boardService.joinGame(this.boardService.getGameId(), this.boardService.getPlayerId()).subscribe((players) => {
+        console.log(players);
+        this.router.navigate(['player-selection']);
+      }, (err) => {
+        console.log(err);
+      });
+    }, (err) => {
+      console.log(err);
+    });
   }
 }

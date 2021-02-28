@@ -1,0 +1,36 @@
+ <div class="md-form">
+   <!-- Card -->
+   <mdb-card>
+     <!--Card content-->
+     <mdb-card-body>
+      <div [ngClass]="{'lockedIn': lockedIn}">
+        <div class="col">
+          <div class="row justify-content-center align-items-center space-around">
+            <div>
+              <mdb-icon style="margin: 8px;" fas icon="shield-alt" size="2x" (click)="setClass('Warrior')"></mdb-icon>
+              <mdb-icon style="margin: 8px;" fas icon="hat-wizard" size="2x" (click)="setClass('Mage')"></mdb-icon>
+              <mdb-icon style="margin: 8px;" fas icon="cross" size="2x" (click)="setClass('Priest')"></mdb-icon>
+              <mdb-icon style="margin: 8px;" fas icon="bone" size="2x" (click)="setClass('Hunter')"></mdb-icon>
+              <mdb-icon style="margin: 8px;" fas icon="user-ninja" size="2x" (click)="setClass('Rouge')"></mdb-icon>
+            </div>
+          </div>
+          <div class="row justify-content-center align-items-center">
+            <div>
+              <p>Class: {{class}}</p>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="col align-items-center" style="margin-bottom: 20px;">
+          <input mdbInput required [(ngModel)]="playerName" type="text" id="form1" class="w-100" placeholder="Name">
+        </div>
+      </div>
+      <div class="col">
+        <button *ngIf="!lockedIn" block="true" (click)="lockIn()" type="button" mdbBtn color="success" mdbWavesEffect>Lock in!</button>
+        <button *ngIf="lockedIn" block="true" (click)="unlock()" type="button" mdbBtn color="warning" mdbWavesEffect>Unlock</button>
+        <p class="col text-warning text-wrap" style="font-size: 12px;">{{userInfo}}</p>
+      </div>
+     </mdb-card-body>
+   </mdb-card>
+   <!-- Card -->
+ </div>

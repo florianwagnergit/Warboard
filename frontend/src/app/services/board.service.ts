@@ -3,19 +3,75 @@ import { Field } from '../../class/Field'
 import { Player } from '../../class/Player'
 import { Observable, Subject } from 'rxjs';
 import { webSocket } from "rxjs/webSocket";
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoardService {
 
+  playerId: string;
   matrix: Field[][];
   players: Player[];
   currentField = new Subject();
   isInRageOfSkill = new Subject<Calculation>();
   ws;
-  constructor() { }
+  gameId: string;
+  userInfo: string;
 
+  constructor(private http: HttpClient) { 
+      // Init Websocket
+      // https://github.com/ReactiveX/rxjs/issues/4166
+      this.ws = webSocket({
+        url: 'ws://localhost:3001'
+      });
+
+      this.ws.subscribe((msg) => {
+        this.messageHandler(msg);
+      }, (err) => console.error(err), () => console.warn('Completed!'));
+  }
+
+  createNewGame() { 
+    return this.http.get('http://localhost:3000/create-new-game');
+  }
+
+  joinGame(gameId, playerId) {
+    return this.http.get('http://localhost:3000/join-game?gameId=' + gameId + '&playerId=' + playerId);
+  }
+
+  messageHandler(msg) {
+    console.log(msg);
+    if(msg.action === 'set-player-id' && msg.playerId) {
+      this.setPlayerId(msg.playerId);
+    } else if(msg.action === 'set-game-id' && msg.gameId) {
+      this.setGameId(msg.gameId);
+    }
+  }
+
+  setGameId(gameId) {
+    this.gameId = gameId;
+  }
+
+  getGameId() {
+    return this.gameId;
+  }
+
+  getPlayerId() {
+    return this.playerId;
+  }
+
+  setPlayerId(playerId) {
+    this.playerId = playerId;
+  }
+
+  setUserInfo(userInfo) {
+    this.userInfo = userInfo;
+  }
+
+  getUserInfo() {
+    return this.userInfo;
+  }
+  
   initBoard(width: number, height: number, players: Player[]): void {
     // Init Board
     this.matrix = [];
@@ -46,20 +102,14 @@ export class BoardService {
     // Give Turn to Player 1
     this.players[0].setTurn(true);
     console.log('BOARD INITIALIZED');
-
-    // Init Websocket
-    // https://github.com/ReactiveX/rxjs/issues/4166
-    this.ws = webSocket({
-      url: 'ws://localhost:3001',
-      deserializer: msg => msg
-    });
-    this.ws.subscribe((message) => {
-      console.log(message);
-    }, (err) => console.error(err), () => console.warn('Completed!'));
   }
 
   getMatrix(): Field[][] {
     return this.matrix;
+  }
+
+  setPlayers(players) {
+    this.players = players;
   }
 
   getPlayers() {

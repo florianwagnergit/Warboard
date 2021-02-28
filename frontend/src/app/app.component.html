@@ -1,8 +1,5 @@
 <div class="container-fluid">
     <div class="container-fluid">
-        <app-start-menu *ngIf="!gameStart" (gameStart)="start($event)"></app-start-menu> 
-    </div>
-    <div class="container-fluid">
-        <app-board *ngIf="gameStart"></app-board>
+        <router-outlet></router-outlet>
     </div>
 </div>
