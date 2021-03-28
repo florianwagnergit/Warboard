@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BoardService } from '../services/board.service';
-
-
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-board',
@@ -12,10 +10,10 @@ export class BoardComponent implements OnInit {
 
   matrix;
 
-  constructor(private boardService: BoardService) { }
+  constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
-    this.matrix = this.boardService.getMatrix();
+
   }
 
 }

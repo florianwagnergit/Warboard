@@ -27,27 +27,6 @@ export class GamesController {
         });
     }
 
-
-    async messageHandler(conn, msg) {
-        try {
-            msg = JSON.parse(msg);
-            console.log('Message from ' + conn.id + ': ' + msg.action);
-        } catch(err) {
-            console.log('Parse Error:: invalid Message: ' + msg + ' from Connection: ' + conn);
-        }
-        try {
-            if(msg.action === 'XXXXXXXXX' && msg.gameId) {
-                if(this.games.has(msg.gameId)) {
-                    // TODO
-                } else {
-                    conn.send(JSON.stringify({ action:'error', error: 'Error joining game: This game does not exist.' }));
-                }
-            }
-        } catch (err) {
-            conn.send(JSON.stringify({ action: 'error', error: '500 Internal server error' }));
-        }
-    }
-
     async createNewGame() {
         let game = new Game();
         this.games.set(game.getGameId(), game);
@@ -62,19 +41,65 @@ export class GamesController {
         const playerId = req.query.playerId;
         if(this.games.has(gameId)) {
             this.games.get(gameId).addPlayer(playerId);
-            for(let player of this.games.get(gameId).getPlayers()) {
-                if(player.getPlayerId() !== playerId) {
-                    this.connections.get(player.getPlayerId()).send({ action: 'add-player', player: this.games.get(gameId).getPlayer(playerId)});
-                }
-            }
+
+            this.broadcastToGame(gameId, playerId, { action: 'add-player', player: this.games.get(gameId).getPlayer(playerId) });
+
+            const otherPlayers = this.games.get(gameId).getPlayers().filter((player) => {
+                return player.getPlayerId() !== playerId;
+            });
+            
             return {
                 status: 200,
-                msg: this.games.get(gameId).getPlayers()
+                msg: {
+                    players: otherPlayers
+                }
             }
         } else {
             return {
                 status: 200,
                 msg: 'Error joining game: invalid gameId'
+            }
+        }
+    }
+
+    async messageHandler(conn, msg) {
+        try {
+            msg = JSON.parse(msg);
+            console.log('Message from ' + conn.id + ': ' + msg.action);
+        } catch(err) {
+            console.log('Parse Error:: invalid Message: ' + msg + ' from Connection: ' + conn);
+        }
+        try {
+            if(msg.action === 'ws-client-message' && msg.gameId && msg.playerId) {
+                if(this.games.has(msg.gameId)) {
+                    // TODO
+                } else {
+                    // conn.send(JSON.stringify({ action:'error', error: 'Error joining game: This game does not exist.' }));
+                }
+            }
+        } catch (err) {
+            conn.send(JSON.stringify({ action: 'error', error: '500 Internal server error' }));
+        }
+    }
+
+    async broadcastToGame(gameId: Game, senderPlayerId: string, msg: Object) {
+        if(gameId) {
+           for(let player of this.games.get(gameId).getPlayers()) {
+                if(player.getPlayerId() !== senderPlayerId) {
+                    this.connections.get(player.getPlayerId()).send(JSON.stringify(msg));
+                }
+            } 
+        }
+        return {
+            status: 200,
+            msg: 'Players notified!'
+        }
+    }
+
+    async broadcastToPlayer(game: Game, recieverPlayerId: string, msg: Object) {
+        for(let player of game.getPlayers()) {
+            if(player.getPlayerId() === recieverPlayerId) {
+                this.connections.get(player.getPlayerId()).send(JSON.stringify(msg));
             }
         }
     }

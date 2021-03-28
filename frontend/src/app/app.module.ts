@@ -16,6 +16,7 @@ import { SkillbarComponent } from './board/skillbar/skillbar.component';
 import { SkillComponent } from './board/skillbar/skill/skill.component';
 import { PlayerSelectionMenuComponent } from './player-selection-menu/player-selection-menu.component';
 import { ForeignPlayerCardComponent } from './player-selection-menu/foreign-player-card/foreign-player-card.component';
+import { WarboardChatComponent } from './warboard-chat/warboard-chat.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ForeignPlayerCardComponent } from './player-selection-menu/foreign-play
     SkillbarComponent,
     SkillComponent,
     PlayerSelectionMenuComponent,
-    ForeignPlayerCardComponent
+    ForeignPlayerCardComponent,
+    WarboardChatComponent
   ],
   imports: [
     BrowserModule,

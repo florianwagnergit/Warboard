@@ -1,7 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { BoardService } from '../services/board.service';
+import { Component, OnInit } from '@angular/core';
+import { BoardService } from '../../services/board.service';
 import { Router } from '@angular/router';
-import { invalid } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-start-menu',
@@ -17,11 +16,10 @@ export class StartMenuComponent implements OnInit {
   userInfo = ''
   gameId = ''
 
-
   constructor(private boardService: BoardService, private router: Router) { }
 
   ngOnInit(): void {
-    this.playerName = null;
+    this.playerName = 'unnamed';
     this.class = null;
   }
 
@@ -35,10 +33,10 @@ export class StartMenuComponent implements OnInit {
 
   joinGame() {
     if(this.gameId.length == 36) {
-      this.boardService.joinGame(this.gameId, this.boardService.getPlayerId()).subscribe((result: any) => {
+      this.boardService.joinGame(this.gameId, this.boardService.getPlayer().getPlayerId()).subscribe((result: any) => {
         this.boardService.setGameId(this.gameId);
         console.log(result);
-        this.boardService.setPlayers(result.msg);
+        this.boardService.setPlayers(result.msg.players);
         this.router.navigate(['player-selection']);
       }, (err) => {
         console.log(err);
@@ -54,7 +52,7 @@ export class StartMenuComponent implements OnInit {
     this.boardService.createNewGame().subscribe((result: any) => {
       this.boardService.setGameId(result.gameId);
       console.log(result.gameId);
-      this.boardService.joinGame(this.boardService.getGameId(), this.boardService.getPlayerId()).subscribe((players) => {
+      this.boardService.joinGame(this.boardService.getGameId(), this.boardService.getPlayer().getPlayerId()).subscribe((players) => {
         console.log(players);
         this.router.navigate(['player-selection']);
       }, (err) => {

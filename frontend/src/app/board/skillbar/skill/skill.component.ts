@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BoardService } from 'src/app/services/board.service';
+import { BoardService } from 'src/services/board.service';
 
 @Component({
   selector: 'app-skill',
@@ -18,8 +18,6 @@ export class SkillComponent implements OnInit {
   }
 
   selectSkill() {
-    this.board.calculateSkillRange(this.board.getCurrentPlayer().getHero().getX(), this.board.getCurrentPlayer().getHero().getY(), this.board.getCurrentPlayer().getHero().getMovement());
-    this.selectedSkill.emit(this.skill);
   }
 
   showDetails() {

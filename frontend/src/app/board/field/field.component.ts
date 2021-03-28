@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BoardService } from '../../services/board.service';
+import { BoardService } from '../../../services/board.service';
 import { Field } from '../../../class/Field';
 import { Player } from 'src/class/Player';
 
@@ -16,33 +16,10 @@ export class FieldComponent implements OnInit {
 
   constructor(private board: BoardService) {  }
 
-  ngOnInit(): void {
-    this.board.getFieldSelection().subscribe((field) => {
-      if (this.field === field) {
-        this.field.setSelected(true);
-      } else {
-        this.field.setSelected(false);
-      }
-    });
+  ngOnInit(): void {}
 
-    this.board.getIsInRangeOfSkill().subscribe((calc) => {
-      // reset
-      this.isInRange = false;
-      // validate
-      const distanceX = calc.posX - this.field.getPosX();
-      const distanceY = calc.posY - this.field.getPosY();
-      const distance = Math.sqrt(((distanceX * distanceX) + (distanceY * distanceY)));
-      if (distance > calc.range) {
-          this.isInRange = false;
-      } else {
-        this.isInRange = true;
-      }
-    });
-  }
 
   setSelected(): void {
-    this.field.setSelected(true);
-    this.board.setFieldSelection(this.field);
   }
 
   hasHero() {

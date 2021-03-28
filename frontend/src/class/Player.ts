@@ -9,8 +9,8 @@ export class Player {
     turn: boolean;
     hero: Mage | Warrior;
 
-    constructor(playerId: string) {
-        this.playerId = playerId;
+    constructor() {
+        this.playerId = null;
         this.isReady = null;
         this.playerName = null;
         this.team = null;
@@ -43,6 +43,10 @@ export class Player {
 
     setPlayerName(name) {
         this.playerName = name;
+    }
+
+    setPlayerId(playerId) {
+        this.playerId = playerId;
     }
 
     setIsReady(isReady) {

@@ -6,8 +6,8 @@ export class Player {
     playerName: string;
     playerHero: Hero;
 
-    constructor() {
-        this.playerId = uuidv4();
+    constructor(playerId) { 
+        this.playerId = playerId;
     }
 
     getPlayerId() {

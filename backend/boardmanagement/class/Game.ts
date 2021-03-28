@@ -18,8 +18,8 @@ export class Game {
         return this.gameId;
     }
 
-    addPlayer() {
-        this.players.push(new Player());
+    addPlayer(playerId) {
+        this.players.push(new Player(playerId));
     }
     
     getPlayers() {

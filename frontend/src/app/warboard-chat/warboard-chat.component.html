@@ -1,0 +1,31 @@
+<div class="container h-100">
+    <div class="content col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body height3">
+                <ul class="chat-list">
+                    <li class="in">
+                        <div class="chat-body">
+                            <div class="chat-message">
+                                <h5>Warboard Bot</h5>
+                                <p>Welcome to Warboard. Have fun!</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="in" *ngFor="let message of messages">
+                        <div class="chat-body">
+                            <div class="chat-message">
+                                <h5>{{message.getFrom()?message.getFrom():'unnamed'}}</h5>
+                                <p>{{message.getTime()}}</p>
+                                <p>{{message.getMsg()}}</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="md-form">
+                    <input mdbInput type="text" (keydown.enter)="appendMessage()" [(ngModel)]="message.msg" id="chat-input" class="form-control">
+                    <label for="chat-input" class="">message</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
