@@ -3,9 +3,9 @@
     <!--Card content-->
     <mdb-card-body>
     <div class="row justify-content-center align-items-center">
-        <p>Class: {{class}}</p>
-        <p>Playername: {{playerName}}</p>
-        <p>Ready: NO!</p>
+        <p>Class: {{player.getHero().getClass()}}</p>
+        <p>Playername: {{player.getPlayerName()}}</p>
+        <p>Ready: {{player.getIsReady()}}</p>
     </div>
     </mdb-card-body>
 </mdb-card>

@@ -1,5 +1,6 @@
 import { Warrior } from "./classes/Warrior";
 import { Mage } from "./classes/Mage";
+import { Hero } from "./Hero";
 
 export class Player {
     playerId: string;
@@ -37,10 +38,6 @@ export class Player {
         return this.turn;
     }
 
-    getHero() {
-        return this.hero;
-    }
-
     setPlayerName(name) {
         this.playerName = name;
     }
@@ -49,7 +46,7 @@ export class Player {
         this.playerId = playerId;
     }
 
-    setIsReady(isReady) {
+    setIsReady(isReady: boolean) {
         this.isReady = isReady;
     }
 
@@ -61,8 +58,12 @@ export class Player {
         this.turn = isTurn;
     }
 
-    setHero(hero) {
+    setHero(hero: any) {
         this.hero = hero;
+    }
+
+    getHero(): Hero {
+        return this.hero;
     }
 
 }
