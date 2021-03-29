@@ -29,7 +29,7 @@ export class ForeignPlayerCardComponent implements OnInit {
       player.setPlayerName('Dummy name ' + i);
       player.setPlayerTeam(i % 2 ? 0 : 1);
       player.setHero(warrior);
-      players.push(new Player())
+      players.push(player);
     }
     return players;
   }
