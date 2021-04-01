@@ -1,13 +1,14 @@
 <!-- Card -->
-<mdb-card *ngFor="let player of players" [ngStyle]="{'background-color': player.getIsReady() ? 'green' : 'red' }">
-    <!--Card content-->
-    <mdb-card-body>
-        <mdb-card-title>
-            <h4>{{player.getPlayerName() ? player.getPlayerName() : 'Player'}}</h4>
-        </mdb-card-title>
-        <mdb-card-text>
-            <p>Class: {{player.getHero().getClass()}}</p>
-        </mdb-card-text>
-    </mdb-card-body>
-</mdb-card>
-<!-- Card -->
+<div class="container mb-3" *ngFor="let player of players" >
+    <mdb-card [ngStyle]="{'background-color': player.getIsReady() ? '#81c784' : '#ef9a9a' }">
+        <mdb-card-body class="text-center">
+            <mdb-card-title>
+                <h4>{{player.getPlayerName() ? player.getPlayerName() : 'Player'}}</h4>
+            </mdb-card-title>
+            <mdb-card-text>
+                <p>Class: {{player.getHero().getClass()}}</p>
+            </mdb-card-text>
+        </mdb-card-body>
+    </mdb-card>
+</div>
+    

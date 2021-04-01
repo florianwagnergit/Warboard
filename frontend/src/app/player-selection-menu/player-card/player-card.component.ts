@@ -10,8 +10,6 @@ import { Mage } from 'src/class/classes/Mage';
 })
 export class PlayerCardComponent implements OnInit {
 
-  @Output() readyPlayer = new EventEmitter();
-
   // Template Variables
   playerName: string;
   class: string;
@@ -21,7 +19,7 @@ export class PlayerCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.playerName = 'Test Player';
+    this.playerName = '';
     this.class = 'Warrior';
     this.userInfo = null;
     this.lockedIn = false;
@@ -34,15 +32,14 @@ export class PlayerCardComponent implements OnInit {
   lockIn() {
     if(this.class && this.playerName) {
       this.lockedIn = true;
-      this.readyPlayer.emit( { playerName: this.playerName, class: this.class } );
+      this.userInfo = null;
     } else {
-      this.userInfo = 'Please enter your class and your name.'
+      this.userInfo = 'Please enter your class, team and your name.'
     }
   }
 
   unlock() {
     this.lockedIn = false;
-    this.readyPlayer.emit(false);
   }
 
 }
