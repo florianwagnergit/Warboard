@@ -48,7 +48,7 @@ export class Player {
         this.isReady = isReady;
     }
 
-    setPlayerTeam(team) {
+    setTeam(team) {
         this.team = team;
     }
 

@@ -23,6 +23,7 @@ export class PlayerSelectionMenuComponent implements OnInit {
     testPlayer.setPlayerName('TEST PLAYER');
     testPlayer.setIsReady(true);
     testPlayer.setPlayerId('TEST ID');
+    testPlayer.setTeam('South');
     let hero = new Warrior();
     testPlayer.setHero(hero);
     this.players.push(testPlayer);

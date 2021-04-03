@@ -7,6 +7,7 @@
             </mdb-card-title>
             <mdb-card-text>
                 <p>{{this.player?.getHero()?.getClass() ? this.player?.getHero()?.getClass() : 'Warrior'}}</p>
+                <h4 [ngClass]="{'text-primary': this.player?.getTeam() === 'North', 'text-danger': this.player?.getTeam() === 'South'}">{{this.player?.getTeam()}}</h4>
             </mdb-card-text>
         </mdb-card-body>
     </mdb-card>
