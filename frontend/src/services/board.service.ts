@@ -44,8 +44,10 @@ export class BoardService {
       this.player.setPlayerId(msg.playerId);
     } else if(msg.action === 'set-game-id' && msg.gameId) {
       this.setGameId(msg.gameId);
-    } else if(msg.action === 'add-player' && msg.player) {
-      this.addPlayer(msg.player);
+    } else if(msg.action === 'add-player' && msg.playerId) {
+      let player = new Player();
+      player.setPlayerId(msg.playerId);
+      this.addPlayer(player);
     }
   }
 

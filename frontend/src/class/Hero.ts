@@ -1,5 +1,4 @@
 import { Buff } from '../class/Buff';
-import { Move } from './abilites/Move';
 import { Ability } from './Ability';
 
 export class Hero {
@@ -36,10 +35,6 @@ export class Hero {
         return this.buffs;
     }
 
-    getClass() {
-        return this.class;
-    }
-
     getAbilities() {
         return this.abilities;
     }
@@ -54,6 +49,14 @@ export class Hero {
 
     recieveDamage(damage) {
         this.hp -= damage;
+    }
+
+    getClass() {
+        return this.class;
+    }
+
+    setClass(heroClass) {
+        this.class = heroClass;
     }
 
 }

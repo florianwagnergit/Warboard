@@ -42,7 +42,7 @@ export class GamesController {
         if(this.games.has(gameId)) {
             this.games.get(gameId).addPlayer(playerId);
 
-            this.broadcastToGame(gameId, playerId, { action: 'add-player', player: this.games.get(gameId).getPlayer(playerId) });
+            this.broadcastToGame(gameId, playerId, { action: 'add-player', playerId: playerId });
 
             const otherPlayers = this.games.get(gameId).getPlayers().filter((player) => {
                 return player.getPlayerId() !== playerId;

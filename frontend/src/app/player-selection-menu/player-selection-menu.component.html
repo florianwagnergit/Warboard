@@ -1,10 +1,10 @@
 <div class="container-fluid startMenu">
     <div class="container justify-content-center p-3">
         <h1>Player Selection</h1>
-        <h2>Game ID: {{gameId}}</h2> 
+        <h2>Game ID: {{gameId}} <button *ngIf="gameId" size="sm" (click)="copyMessage()" type="button" mdbBtn color="info" mdbWavesEffect>Copy</button></h2>
         <hr>   
         <app-player-card></app-player-card>
-        <app-foreign-player-card></app-foreign-player-card>
+        <app-foreign-player-card *ngFor="let player of players" [player]="player"></app-foreign-player-card>
         <app-warboard-chat></app-warboard-chat>
     </div>
 </div>

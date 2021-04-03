@@ -7,12 +7,12 @@ export class Warrior extends Hero {
     movement: number;
     resetMovement: number;
     rage: number;
-
+    
     constructor() {
         super();
+        this.class = 'Warrior';
         this.movement = 7;
         this.resetMovement = 7;
-        this.class = 'Warrior';
         this.hp = 120;
         this.rage = 50;
         this.abilities = [];
